@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="description" content="Portfolio of a Web Development Student.">
+    <meta name="keywords" content="Web Student, HTML, CSS, JavaScript, Python, Portfolio, Landing Pages">
+
+    <title>Nitzan's Portfolio | Web Development Student</title>    
+    <link rel="stylesheet" href="style.css">
+
+    <!-- פונטים -->
+    <!-- ראשי -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&family=Poppins:ital,wght@0,100;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <!-- משני -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Oswald:wght@200..700&family=Poppins:ital,wght@0,100;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="logo">NITZAN.DEV</div>
+        
+        <nav>
+            <ul>
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#projects">Work</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+    <section id="hero">
+        <div class="container">
+            <h1>Hi, I'm Nitzan.<br>Web Development Student.</h1> <p>I build modern landing pages and clean web interfaces.</p> <a href="#projects" class="cta-button">See My Work</a>
+        </div>
+    </section>
+
+    <section id="about">
+        <div class="container">
+            <h2>About Me</h2>
+            <p>
+                I am a motivated Web Development student based in Tel Aviv.
+                Currently focusing on mastering the fundamentals of the web: HTML, CSS, and JavaScript.
+                I enjoy building responsive landing pages and expanding my coding knowledge every day.
+            </p>
+        </div>
+    </section>
+
+    <section id="skills">
+        <div class="container">
+            <h2>Tech Stack</h2>
+            <ul>
+                <li>HTML5</li>
+                <li>CSS3</li>
+                <li>JavaScript</li>
+                <li>Python</li>
+            </ul>
+        </div>
+    </section>
+
+    <section id="projects">
+        <div class="container">
+            <h2>Selected Projects</h2>
+
+            <article class="project-card">
+                <img src="project1.jpg" alt="Preview of Project 1" loading="lazy">
+                <div class="card-content">
+                    <h3>Landing Page Project</h3>
+                    <p>A responsive landing page designed with clean HTML and CSS.</p>
+                    <div class="tech-tags">
+                        <span>HTML5</span> <span>CSS</span>
+                    </div>
+                    <div class="links">
+                        <a href="#" target="_blank" aria-label="View Code on GitHub">GitHub</a>
+                        <a href="#" target="_blank" aria-label="View Live Demo">Live Demo</a>
+                    </div>
+                </div>
+            </article>
+
+            <article class="project-card">
+                <img src="project2.jpg" alt="Preview of Project 2" loading="lazy">
+                <h3>pizza ordering form</h3>
+                <p>A basic form for ordering pizza</p>
+                <div class="tech-tags">
+                    <span>HTML5</span> <span>CSS</span>
+                </div>
+                <div class="links">
+                    <a href="#" target="_blank" aria-label="View Code on GitHub">GitHub</a>
+                    <a href="#" target="_blank" aria-label="View Live Demo">Live Demo</a>
+                </div>
+            </article>
+        </div>
+        </section>
+
+        <section id="contact">
+            <div class="container">
+                <h2>Get In Touch</h2>
+                <form action="#" method="post">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" rows="5" required></textarea>
+                    </div>
+                
+                    <button type="submit">Send Message</button>
+                </form>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Built by Nitzan Aloni with HTML & CSS.</p>
+            <div class="social-links">
+                <a href="#" aria-label="LinkedIn Profile">LinkedIn</a>
+                <a href="#" aria-label="GitHub Profile">GitHub</a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
