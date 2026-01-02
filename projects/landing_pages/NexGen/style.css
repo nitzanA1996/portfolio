@@ -1,0 +1,32 @@
+body {
+  /* רקע גיימינג כהה ודרמטי */
+  background: radial-gradient(circle at center, #2b1331 0%, #000000 100%);
+  min-height: 100vh;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* חיזוק אפקט הזכוכית לכרטיסיות */
+.glass-card {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* אפקט ריחוף (Hover) על מוצרים */
+.glass-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(230, 0, 115, 0.3); /* צל ורוד ניאון */
+  border-color: #e60073;
+}
+
+.hero-title {
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+}
+
+/* תמונות המוצרים ימלאו את הכרטיס יפה */
+.card-img-top {
+  height: 200px;
+  object-fit: cover;
+  opacity: 0.8;
+}

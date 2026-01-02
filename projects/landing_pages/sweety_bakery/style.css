@@ -1,0 +1,127 @@
+:root {
+  --color-bg-main: #E2852E;
+  --color-bg-header: #fae5c2;
+  --color-lightblue: #89CFF0;
+  --color-headline: #899CF0;
+  --font-heading: font-family: "Syncopate", sans-serif;
+  --font-body: font-family: 'Fredoka' sans-serif;
+
+  --font-size-base: 16px;
+  --line-height-base: 1.6;
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 800;
+}
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+body {
+  background-color: #E2852E;
+}
+
+.frame {
+  background-color:var(--color-bg-header);
+  width: 90%;
+  height: 100%;
+  margin: auto;
+  margin-top: 0;
+}
+
+h1 {
+  color: var(--color-headline);
+  font-family: var(--font-heading);
+  font-weight: bold;
+}
+
+header {
+  background-color: var(--color-bg-header);
+  height: 140px;
+  display: flex;
+  flex-direction: column;
+}
+
+header h1 {
+  text-align: center;
+  margin-bottom: 0;
+}
+
+.row {
+  display: flex;
+
+}
+ul {
+  display: flex;
+  list-style: none;  
+}
+
+li {
+  color: var(--color-lightblue);
+  padding: 0 1rem;
+  font-size: 1.1rem;
+  font-family: "poppins", sans-serif;
+  font-weight: 500;
+  cursor: pointer;
+  transition: 200ms;
+}
+
+li:hover {
+  text-decoration: underline;
+  transform: scale(1.1);
+}
+.dish {
+  display: flex;
+  width: 100%;
+  height: 250px;
+  margin: auto;
+}
+
+.cake-img {
+  display: flex;
+  justify-content: center;
+  margin: auto;
+  width: 30rem;
+  height: 90%;
+  padding: 0.2rem 0;  
+  padding-right: 0.7rem;
+}
+
+.dish .text {
+  padding: 10px;
+}
+
+#Éclairs {
+  background-color: #ffbf7c;
+}
+
+#pistachio-cake {
+  background-color: var(--color-);
+}
+#Pumpkin-Cake {
+  background-color: #ffbf7c;
+}
+
+.btn-order {
+  position: relative;
+  border-radius: 12px;
+  width: 25%;
+  height: 15%;
+  border: 2px solid black;
+  background-color: #FF5C77;
+  background-image:  radial-gradient(rgba(0, 0, 0, 80) 1.5px, transparent 1.5px);
+  background-size: 30px 30px;
+  cursor: pointer;
+  transition: 200ms;
+}
+
+.btn-order span {
+  position: relative;
+  z-index: 2;
+  padding: 0 20px;
+  font-weight: 600;
+  background-color: #FF5C77;
+}
+
+.btn-order:hover{
+  transform: scale(1.02);
+}
