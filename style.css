@@ -319,7 +319,7 @@ button {
 
 .links-list {
   list-style: none;
-  padding: 0;
+  padding: var(--space-sm);
   display: flex;
   gap: var(--space-sm);
 }
