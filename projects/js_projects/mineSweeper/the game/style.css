@@ -1,0 +1,117 @@
+
+:root {
+  --bg-color: #F0E4D7;        /* צבע הרקע הראשי */
+  --shadow-light: #FFFFFF;    /* הצל הבהיר (אור) */
+  --shadow-dark: #C4BFBC;     /* הצל הכהה (עומק) */
+  --text-color: #5D5B5B;      /* צבע הטקסט */
+  --accent-color: #D66D64;    /* צבע למוקש/דגל */
+  --cell-size: 50px;          /* גודל בסיסי למשבצת */
+  --gap-size: 12px;           /* רווח בין משבצות - קריטי לניומורפיזם */
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+  min-height: 100vh;
+  margin: 0;
+}
+
+h1 {
+  font-weight: 300;
+  margin-bottom: 20px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+/* הלוח עצמו - מעטפת */
+.game-board {
+  display: grid;
+  /* כאן נגדיר 8 עמודות לדוגמה. ב-JS תוכלי לשנות את זה דינמית */
+  gap: var(--gap-size);
+  padding: 20px;
+  
+  /* מסגרת חיצונית רכה ללוח כולו */
+  border-radius: 20px;
+  box-shadow: 
+      8px 8px 20px var(--shadow-dark), 
+      -8px -8px 20px var(--shadow-light);
+}
+
+/* עיצוב בסיסי לכל משבצת (Cell) */
+.cell {
+  width: var(--cell-size);
+  height: var(--cell-size);
+  background-color: var(--bg-color);
+  border-radius: 10px; /* פינות עגולות */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 1.2rem;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.2s ease;
+  
+  /* מצב ברירת מחדל: בולט החוצה (Convex) */
+  box-shadow: 
+      5px 5px 10px var(--shadow-dark), 
+      -5px -5px 10px var(--shadow-light);
+}
+
+/* אפקט ריחוף עדין */
+.cell:hover {
+  transform: translateY(-2px);
+}
+
+/* --- מצבים שונים של המשבצת --- */
+
+/* 1. משבצת שנחשפה (Revealed) - שקועה פנימה */
+.cell.revealed {
+  /* הופכים את הצללים ל-Inset */
+  box-shadow: 
+      inset 5px 5px 10px var(--shadow-dark), 
+      inset -5px -5px 10px var(--shadow-light);
+  color: var(--text-color);
+  transform: none; /* מבטל את הריחוף */
+  cursor: default;
+}
+
+/* 2. מוקש (Mine) */
+.cell.mine.revealed {
+  color: var(--accent-color);
+}
+/* יצירת הכדור האדום במרכז המוקש */
+.cell.mine.revealed::after {
+  content: '';
+  width: 50%;
+  height: 50%;
+  background-color: var(--accent-color);
+  border-radius: 50%;
+  box-shadow: inset 2px 2px 4px rgba(0,0,0,0.2);
+}
+
+/* 3. דגל (Flagged) - נשאר בולט אבל מקבל סימון */
+.cell.flagged {
+  /* אפשר לשנות מעט את צבע הרקע או להוסיף אייקון */
+  color: var(--accent-color);
+}
+.cell.flagged::after {
+  content: '🚩'; /* או להשתמש בסיכה/צורה ב-CSS */
+  font-size: 1rem;
+}
+
+/* רספונסיביות למובייל */
+@media (max-width: 600px) {
+  :root {
+      --cell-size: 35px; /* הקטנת המשבצות בנייד */
+      --gap-size: 8px;
+  }
+  .game-board {
+      padding: 15px;
+  }
+}
