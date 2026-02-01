@@ -5,7 +5,7 @@ let gameStart = false;
 let didLost = false;
 let isOver = false; 
 
-let lineLen = 9;
+let lineLen = 15;
 let amountOfMine = 15;
 let mineLeft = amountOfMine;
 
