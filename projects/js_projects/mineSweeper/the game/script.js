@@ -5,8 +5,9 @@ let gameStart = false;
 let didLost = false;
 let isOver = false; 
 
-let lineLen = 15;
-let amountOfMine = 15;
+let lineLen = 12;
+let coloumnLen = 12;
+let amountOfMine = 25;
 let mineLeft = amountOfMine;
 
 let isFlagMode = false;
@@ -14,7 +15,7 @@ let isFlagMode = false;
 createBorad();
 
 function createBorad(){
-  let totalCells = lineLen ** 2;
+  let totalCells = lineLen * coloumnLen;
   gameBoard.style.gridTemplateColumns = `repeat(${lineLen}, minmax(35px, 1fr)`;
   gameBoard.style.gridTemplateRows = `repeat(${lineLen}, minmax(35px, 1fr)`;
 
@@ -77,10 +78,10 @@ function generateMines(i){
   let mapOfMine = [];
 
   for(let m = 0; m < amountOfMine; m++){
-    let randSquare = Math.floor(Math.random() * (lineLen ** 2));
+    let randSquare = Math.floor(Math.random() * (lineLen * coloumnLen));
 
     while(gameMap[randSquare] === gameMap[i] || mapOfMine.includes(randSquare)){
-      randSquare = Math.floor(Math.random() * (lineLen ** 2));
+      randSquare = Math.floor(Math.random() * (lineLen * coloumnLen));
     }
     
     gameMap[randSquare].isBomb = true;
@@ -112,7 +113,7 @@ function getNeighbors(index) {
   const neighbors = [];
   const isLeftEdge = index % lineLen === 0;
   const isRightEdge = index % lineLen === lineLen - 1;
-  const totalCells = lineLen ** 2;
+  const totalCells = lineLen * coloumnLen;
 
   // כל הכיוונים האפשריים (ימינה, שמאלה, למעלה, למטה ואלכסונים)
   const sides = [
@@ -144,6 +145,14 @@ function loseOrWin(res){
   const decision = (res) ? "winner 🏆" : "Loooser!"
   messageHead.innerText = decision;
   isOver = true;
+  if(!res){
+    gameMap.forEach((cube, i) => {
+    if(cube.isBomb) {
+      let cell = document.getElementById(i);
+      cell.innerHTML = "❌"
+    }
+  });
+  }
   // message2.innerHTML= "loser";
 }
 
