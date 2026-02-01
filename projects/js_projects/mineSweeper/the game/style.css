@@ -102,16 +102,58 @@ h1 {
 }
 .cell.flagged::after {
   content: '🚩'; /* או להשתמש בסיכה/צורה ב-CSS */
-  font-size: 1rem;
+  font-size: 1.5rem;
 }
 
 /* רספונסיביות למובייל */
 @media (max-width: 600px) {
   :root {
-      --cell-size: 35px; /* הקטנת המשבצות בנייד */
-      --gap-size: 8px;
+      --cell-size: 28px; /* הקטנת המשבצות בנייד */
+      --gap-size: 6px;
   }
   .game-board {
-      padding: 15px;
+      padding: 10px;
+      width: max-content;
   }
+  .cell {
+      border-radius: 6px;
+      /* צללים עדינים יותר */
+      box-shadow: 
+          3px 3px 6px var(--shadow-dark), 
+          -3px -3px 6px var(--shadow-light);
+  }
+  .cell.revealed {
+      box-shadow: 
+          inset 2px 2px 5px var(--shadow-dark), 
+          inset -2px -2px 5px var(--shadow-light);
+  }
+  .cell { font-size: 0.9rem; }
+  .cell.flagged::after { font-size: 0.9rem; }
+}
+
+.message h2{
+  text-align: center;
+  text-transform: uppercase;
+  opacity: 0;
+  transition: all 1s ease;
+}
+
+.message.show {
+  height: 3rem;
+  width: auto;
+  text-align: center;
+}
+
+.message.show h2{
+  opacity: 100%;
+  margin-bottom: 1rem;
+  margin-top: 0;
+}
+.cell.lose{
+  opacity: 0;
+  transition: all 0.2 ease;
+}
+
+.cell.lose.show {
+  opacity: 100%;
 }
