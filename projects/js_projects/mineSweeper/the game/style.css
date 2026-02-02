@@ -21,6 +21,13 @@ body {
   margin: 0;
 }
 
+header{
+  width:70%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 h1 {
   font-weight: 300;
   margin-bottom: 20px;
@@ -149,6 +156,19 @@ h1 {
   margin-bottom: 1rem;
   margin-top: 0;
 }
+
+.game-info{
+  display: flex;
+  width: 100%;
+  align-items: start;
+  padding-bottom:2rem;
+  gap: 1rem;
+}
+
+.game-info #mine-counter {
+  width: 100%;
+}
+
 .cell.lose{
   opacity: 0;
   transition: all 0.2 ease;
