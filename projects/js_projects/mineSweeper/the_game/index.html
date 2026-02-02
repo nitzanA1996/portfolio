@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+    <title>Minesweeper</title>
+</head>
+<body>
+
+  <header>
+    <h1>Minesweeper</h1>
+    <div class="message">
+      <h2></h2>
+    </div>
+    
+    <div class="game-info">
+      <span>mines left: <span id="mines-couter">0</span></span>
+      <span id="timer">00:00</span>
+    </div>
+
+    <div class="customizer">
+      <span>Difficulty Levels</span>
+      <ul class="levels-list">
+        <li><button class="level" id="easey">9/9 9 mines</button></li>
+        <li><button class="level" id="intermediate">10/10 15 mines</button></li>
+        <li><button class="level" id="difficult">11/11 20 mines</button></li>
+        <li><button class="level" id="advanced">12/12 25 mines</button></li>
+      </ul>
+    </div>
+  </header>
+
+  <main>
+    <div class="game-board">
+
+    </div>
+    <div class="button-mobile">
+      <button id="mode-btn">⛏️ מצב חפירה</button>
+    </div>
+  </main>
+
+</body>
