@@ -1,14 +1,26 @@
 const gameBoard = document.querySelector(".game-board"); 
 
+const minesLeftOutput =document.getElementById("mines-couter");
+const timerOutput = document.getElementById("timer");
+
+// dificult levels button
+const easey = document.querySelector("#easey");
+const intermediate = document.querySelector("#intermediate");
+const difficult = document.querySelector("#difficult");
+const advanced = document.querySelector("#advanced");
+
+
 let gameMap = [];
 let gameStart = false;
 let didLost = false;
 let isOver = false; 
+let isTimerStart = false;
+let timerId;
 
-let lineLen = 12;
-let coloumnLen = 12;
-let amountOfMine = 25;
-let mineLeft = amountOfMine;
+let lineLen = 9;
+let coloumnLen = 9;
+let numOfMine = 10;
+let mineLeft = numOfMine;
 
 let isFlagMode = false;
 
@@ -16,8 +28,8 @@ createBorad();
 
 function createBorad(){
   let totalCells = lineLen * coloumnLen;
-  gameBoard.style.gridTemplateColumns = `repeat(${lineLen}, minmax(35px, 1fr)`;
-  gameBoard.style.gridTemplateRows = `repeat(${lineLen}, minmax(35px, 1fr)`;
+  gameBoard.style.gridTemplateColumns = `repeat(${lineLen}, minmax(35px, 1fr))`;
+  gameBoard.style.gridTemplateRows = `repeat(${lineLen}, minmax(35px, 1fr))`;
 
   for(let i = 0; i < totalCells; i++){
     let cell = document.createElement("div");
@@ -50,8 +62,9 @@ function showVAl(ev, i){
   
   if(!gameStart){
     generateMines(i)
+    minesLeftOutput.innerText = numOfMine
+    startTimer();
     gameStart = true;
-
     if (gameMap[i].val === 0) {
       zeroChain(i);
     }else{
@@ -77,7 +90,7 @@ function showVAl(ev, i){
 function generateMines(i){
   let mapOfMine = [];
 
-  for(let m = 0; m < amountOfMine; m++){
+  for(let m = 0; m < numOfMine; m++){
     let randSquare = Math.floor(Math.random() * (lineLen * coloumnLen));
 
     while(gameMap[randSquare] === gameMap[i] || mapOfMine.includes(randSquare)){
@@ -145,6 +158,7 @@ function loseOrWin(res){
   const decision = (res) ? "winner 🏆" : "Loooser!"
   messageHead.innerText = decision;
   isOver = true;
+  clearInterval(timerId);
   if(!res){
     gameMap.forEach((cube, i) => {
     if(cube.isBomb) {
@@ -196,5 +210,57 @@ function flag(ev){
   if(!cell.classList.contains("revealed")) {
     cell.classList.toggle("flagged");
     mineLeft += cell.classList.contains("flagged") ? -1 : +1;
+    minesLeftOutput.innerText = mineLeft    
   }
 }
+
+function startTimer(){
+  let startTime = Date.now();
+  timerId = setInterval(() => {
+    let currentTime = Date.now();
+    let secondsPassed = Math.floor((currentTime - startTime)/ 1000);
+
+    let minutes = Math.floor(secondsPassed / 60);
+    let seconds = secondsPassed % 60;
+    timerOutput.textContent = `${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`
+}, 1000);
+}
+
+function DifficultyLev(){
+  easey.addEventListener('click',ev=> {changeLev(ev)});
+  intermediate.addEventListener('click',ev=> {changeLev(ev)});
+  difficult.addEventListener('click',ev=> {changeLev(ev)});
+  advanced.addEventListener('click',ev=> {changeLev(ev)});
+}
+
+function changeLev(button){
+  if (button.target.id === "easey") {  
+    lineLen = 9;
+    coloumnLen = 9;
+    numOfMine = 10;
+    gameBoard.innerHTML = "";
+    createBorad()
+  }
+  if (button.target.id ==="intermediate") {
+    lineLen = 10;
+    coloumnLen = 10;
+    numOfMine = 15;
+    gameBoard.innerHTML = "";
+    createBorad()
+  }
+  if (button.target.id ==="difficult") {
+    lineLen = 11;
+    coloumnLen = 11;
+    numOfMine = 20;
+    gameBoard.innerHTML = "";
+    createBorad()    
+  }
+  if (button.target.id ==="advanced") {
+    lineLen = 12;
+    coloumnLen = 12;
+    numOfMine = 25;
+    gameBoard.innerHTML = "";
+    createBorad()
+  }
+}
+DifficultyLev()
