@@ -1,5 +1,5 @@
 :root {
-    --bg-color: #E6E1DE;
+    --bg-color: #F0E4D7;
     --shadow-light: #FFFFFF;/* הצללה*/
     --shadow-dark: #C4BFBC;
     --text-main: #5D5B5B;
@@ -141,8 +141,15 @@ h1 {
 .cell.revealed {
     /* אחרי לחיצה */
     box-shadow: none;
-    background-color: #dcd8d4; /* טיפה יותר כהה להדגשה */
+     /* טיפה יותר כהה להדגשה */
+    color: var(--accent);
     border: 1px solid rgba(0,0,0,0.05);
+    box-shadow: 
+    inset 5px 5px 10px var(--shadow-dark), 
+    inset -5px -5px 10px var(--shadow-light);
+    color: var(--text-color);
+    transform: none; /* מבטל את הריחוף */
+    cursor: default;
 }
 
 .cell.flagged {
