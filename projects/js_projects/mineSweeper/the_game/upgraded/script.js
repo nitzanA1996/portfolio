@@ -11,6 +11,7 @@ const resetBtn = document.getElementById("reset-btn");
 const mobileBtn = document.getElementById("mobile-mode-btn");
 let timerInterval;
 let totalSeconds = 0;
+let minesLeft = 0;
 let isDiggingMode = true; // למובייל
 
 // --- איבנטים ---
@@ -51,8 +52,7 @@ function initGame() {
     totalSeconds = 0;
     timerDisplay.innerText = "000";
     clearInterval(timerInterval);
-    resetBtn.innerText = "🙂";
-
+    resetBtn.innerText = "🙂"
     createBoard();
 
     // עדכון גודל הלוח
@@ -60,7 +60,8 @@ function initGame() {
     
     // מונה מוקשים התחלתי
     let mines = Math.floor(lineLen * lineLen * 0.15); 
-    mineCountDisplay.innerText = String(mines).padStart(3, '0');
+    minesLeft = mines;
+    mineCountDisplay.innerText = String(minesLeft).padStart(3, '0');
 }
 
 function createBoard() {
@@ -139,10 +140,13 @@ function handleRightClick(ev) {
     if (cell.classList.contains("flagged")) {
         cell.classList.remove("flagged");
         cell.innerText = "";
+        minesLeft++;
     } else {
         cell.classList.add("flagged");
         cell.innerText = "🚩";
+        minesLeft--
     }
+    mineCountDisplay.innerText = String(minesLeft).padStart(3, '0');
 }
 
 // מייצר את מוקשים
