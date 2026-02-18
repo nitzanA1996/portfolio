@@ -102,25 +102,6 @@ function fillRandLetter(){
   })
 }
 
-function calculateNeighbors(i) {
-  let offsets = [
-    1, -1, // right and left
-    columns, -columns, // up and down
-    columns + 1, columns -1,//diagonal up
-    -(columns+1), -(columns -1)// diagonal down
-  ]
-
-  const isRightEdge = i % columns === columns -1 ;
-  const isLeftEdge = i % columns === 0;
-
-  let neighbors = offsets.map(offset => i + offset);
-  
-  neighbors = neighbors.filter(n => 
-    n >= 0 && 
-    n < gameMap.length && !(isRightEdge && i - 1 === n) && !(isLeftEdge && i + 1 === n)
-  );
-}
-
 function isFit(word, cube, direct) {
   const initalcol = cube.col;
   const initalrow = cube.row;

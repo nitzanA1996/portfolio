@@ -1,10 +1,12 @@
 :root{
-  --color-bg-main: rgb(249, 239, 239);
+  --color-bg-main: #2d4c1e;
   --color-bg-opic: rgba(249, 239, 239, 0.515);
-  --color-bg-card: #b3ebf2;
-  --color-bg-section: #d2d2d2;
-  --color-bg-cell: #5ba675;
-  --main-pattern: ;
+  --color-bg-card: #fdfaf1;
+  --color-bg-section: #7da67d;
+  --color-bg-cell: #6b8e23;;
+  --color-accent: #986B41;
+  --color-text: #0d110d;
+  --main-pattern: url('https://images.pexels.com/photos/2832041/pexels-photo-2832041.jpeg');
 }
 
 *, *::after, *::before {
@@ -12,46 +14,43 @@
 }
 
 body{
-  background-color: var(--color-bg-main);
-  background-image: var(--main-pattern);
-  margin: auto;
-  text-align: center;
+  background-color: #2d4c1e; 
+  background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)), var(--main-pattern);
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  margin: 0;
+  /* margin: auto; */
+  text-align: center; 
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: var(--color-text);
 }
-
 
 h2, h3{
   font-weight: 300;
 }
-header.title {
-  background-color: var(--color-bg-opic);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  max-height: 3rem;
-  max-width:35rem;
-  margin: auto;
-  margin-top: 3rem;
-}
 
-section{
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-} 
-.form-section{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding-top: 3rem;
+header.title {
+  background-color: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(5px);
+  max-height: 3rem;
+  max-width: 35rem;
+  margin: 3rem auto 0;
+  border-radius: 50px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
 }
 
 form{
-  width: 40%;
-  min-height: 50vh;
+  width: 90%;
+  max-width: 550px;
   background-color: var(--color-bg-card);
   display: flex;
   flex-direction: column;
+  margin: auto;
+  padding: 2rem;
+  border-radius: 30px;
+  border: 5px solid var(--color-bg-section);
+  box-shadow: 5px 10px 20px rgba(0,0,0,0.3);
 }
 
 .words-picking{
@@ -83,18 +82,38 @@ dialog::backdrop{
 .cell{
   height: 40px;
   width: 40px;
-  background-color: var(--color-bg-cell);
+  background-color: var(--color-bg-cell); 
+  color: white;
   display: flex;
   align-items: center;
   justify-content: center;
+  border-radius: 6px;
+  font-weight: 400;
+  transition: all 0.2s ease;
 }
 
 .cell:hover{
-  background-color: var(--color-bg-card);
+  background-color: var(--color-accent);
+  transform: scale(1.03);
   cursor: pointer;
+}
+
+input{
+  border-radius: 20px;
 }
 
 button {
   background-color: var(--color-bg-cell);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 25px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s;
 }
 
+button:hover {
+  background-color: var(--color-accent);
+  transform: translateY(-1px);
+}
