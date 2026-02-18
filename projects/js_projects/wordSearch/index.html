@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Word Hunt</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <header class="title">
+    <h1>Word Hunt generator</h1>
+  </header>
+  <main>
+    <section class="form-section">
+      <form id='table-setting'>
+        <h2>generate your own Word Hunt game</h2>
+        <fieldset>
+          <legend>Table size</legend>
+          <br>
+          <input type="number" id="rows" name="rows" placeholder="number of rows">
+          <span>/</span>
+          <input type="number" id="columns" name="columns"placeholder="columns of table">
+        </fieldset>
+
+        <fieldset class="words-picking">
+          <header>
+            <h3>Hidden words</h3>
+            <h4>choose your own words or generate random ones</h4>
+          </header>
+          <div class="create-words">
+            <div class="choose-word">
+              <input type="text" id="user-word" name="user-word">
+              <button type="button" id="add-word">add word</button>
+            </div> <br>
+            <label for="Random-word">add a random word</label>
+            <button id="Random-word">press</button>
+          </div>
+
+          <footer>
+            <ul class="words-list">
+
+            </ul>
+            <button type="submit">create table</button>
+          </footer>
+        </fieldset>
+      </form>
+    </section>
+
+    <dialog class="board-section" id="game-dialog">
+      <div class="game-board"></div>
+    </dialog>
+  </main>
+</body>
+</html>

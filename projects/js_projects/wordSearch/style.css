@@ -1,0 +1,100 @@
+:root{
+  --color-bg-main: rgb(249, 239, 239);
+  --color-bg-opic: rgba(249, 239, 239, 0.515);
+  --color-bg-card: #b3ebf2;
+  --color-bg-section: #d2d2d2;
+  --color-bg-cell: #5ba675;
+  --main-pattern: ;
+}
+
+*, *::after, *::before {
+  box-sizing: border-box;
+}
+
+body{
+  background-color: var(--color-bg-main);
+  background-image: var(--main-pattern);
+  margin: auto;
+  text-align: center;
+}
+
+
+h2, h3{
+  font-weight: 300;
+}
+header.title {
+  background-color: var(--color-bg-opic);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-height: 3rem;
+  max-width:35rem;
+  margin: auto;
+  margin-top: 3rem;
+}
+
+section{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+} 
+.form-section{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 3rem;
+}
+
+form{
+  width: 40%;
+  min-height: 50vh;
+  background-color: var(--color-bg-card);
+  display: flex;
+  flex-direction: column;
+}
+
+.words-picking{
+  border: 0;
+}
+
+.words-list{
+  display: grid;
+  grid-template-rows: repeat(3, 1fr);
+  grid-auto-flow: column;
+  gap: 6px;
+  text-align: start;
+}
+
+dialog::backdrop{
+  display: flex;
+  align-items: center;
+  background-color:rgba(40,54,24, 0.5) ;
+  backdrop-filter: blur(2px);
+}
+
+.game-board{
+  margin-top: 2rem;
+  display: grid;
+  gap: 5px;
+  margin-bottom: 3rem;
+}
+
+.cell{
+  height: 40px;
+  width: 40px;
+  background-color: var(--color-bg-cell);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cell:hover{
+  background-color: var(--color-bg-card);
+  cursor: pointer;
+}
+
+button {
+  background-color: var(--color-bg-cell);
+}
+
