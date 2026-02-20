@@ -3,17 +3,22 @@ const gameBoard = document.querySelector(".game-board");
 const form = document.querySelector("form");
 const list = document.querySelector(".words-list");
 const gameDialog = document.getElementById("game-dialog");
+const alphabet = [
+  "A","B","C","D","E","F","G",
+  "H","I","J","K","L","M",
+  "N","O","P","Q","R","S",
+  "T","U","V","W","X","Y","Z"
+];
 
 const addWordBtn = document.querySelector('#add-word');
 const inputWord = document.querySelector('#user-word');
-
-
+const randomBtn = document.getElementById("Random-word");
 
 let gameMap = [];
 let rows = 0;
 let columns = 0;
 
-/* event */
+/* events */
 // send word with btn
 addWordBtn.addEventListener("click", appendWordList);
 // send word with Enter
@@ -24,12 +29,68 @@ inputWord.addEventListener("keydown", function(ev){
   }
 })
 
-const alphabet = [
-  "A","B","C","D","E","F","G",
-  "H","I","J","K","L","M",
-  "N","O","P","Q","R","S",
-  "T","U","V","W","X","Y","Z"
-];
+// add random words
+randomBtn.addEventListener("click", async function() {
+  const originalText = randomBtn.innerText;
+  randomBtn.innerText = "..searching";
+  randomBtn.disabled = true;
+  
+  try {
+    const rowsInput = document.getElementById('rows').value;
+    const colsInput = document.getElementById('columns').value;
+    // checks the max len of legal words 
+    const maxSize = (rowsInput && colsInput) ? Math.max(rowsInput, colsInput) : 15;
+
+    // go to resource wich is a list of flower names
+    const response = await fetch('https://raw.githubusercontent.com/dariusk/corpora/master/data/plants/flowers.json');
+    const data = await response.json();
+
+    /* filter data from word that are to long or term with spaces */
+    if (data.flowers && data.flowers.length > 0) {
+      const cleanData = data.flowers.filter(word => {
+        const isClean = !word.includes(' ') && !word.includes('-');
+        const isShortEnough = word.length <= maxSize;
+        return isClean && isShortEnough;
+      })
+    // pick random word from the clean data that is allready in the list.
+      if (cleanData.length > 0) {
+        // gather the existing list of word
+        const existingWords = Array.from(list.querySelectorAll('li')).map(li => li.innerText.toUpperCase());
+        
+        let attempts = 0;
+        let randomWord = "";
+        // try 50 times
+        while(attempts < 50){
+          const randomIndex = Math.floor(Math.random() * cleanData.length);
+          const candidate = cleanData[randomIndex];
+
+          // only if flower isnt allready in the list
+          if(!existingWords.includes(candidate.toUpperCase())){
+            randomWord = candidate;
+            break; //found new word
+          }else {
+            attempts++; // didnt find - try again
+          }
+        }
+
+        if(randomWord){
+          addWordToGame(randomWord);
+        }else alert("seems like you allready add all of the flowers that fits this table sizes");
+        console.log(`Added: ${randomWord} (Length: ${randomWord.length}, Max: ${maxSize})`);      
+
+      }else{ // if theres no clean data
+      alert(`did not find flowers thats fits table max size (${maxSize}) 🤷🏾‍♀️`);
+      }
+    }else alert('cant find data🤷🏾‍♀️'); // if didnt fetch any data 
+  
+  }catch(error){
+    console.error(error, ":error")
+    alert('theres problem with the server😭')
+  }finally {
+    randomBtn.innerText = originalText;
+    randomBtn.disabled = false;
+  }
+});
 
 // send the form
 form.addEventListener("submit", function(event){
@@ -46,19 +107,35 @@ function appendWordList(){
 
   const newWord = inputWord.value;
   if(newWord){
-    let newLI =  document.createElement("li");
-    newLI.innerText = newWord.trim();
-    list.appendChild(newLI);
-    // add a hidden input so it can get name prop and be submittable
-    let hiddenInput = document.createElement('input');
-    hiddenInput.type = "hidden";
-    hiddenInput.name = "word";
-    hiddenInput.value = newWord.replaceAll(' ', '');
-    form.appendChild(hiddenInput)
-
+    addWordToGame(newWord);
     inputWord.value = "";
     
   }
+}
+function addWordToGame(word){
+  if (!word) return;
+  /* --! checkes if the words entered isnt to long for the board !-- */  
+  // checkes the sizes directlety from the form fields
+  const inputRows = document.getElementById('rows').value;
+  const inputCols = document.getElementById('columns').value;
+  // only if fileds sizes where entered
+  if (inputRows && inputCols){
+    const maxSize = Math.max(inputCols, inputRows);
+    if(word.length > maxSize) {
+      alert(`"${word}" is too long for board size`)
+      return;
+    }
+  }
+
+  let newLI =  document.createElement("li");
+  newLI.innerText = word.trim();
+  list.appendChild(newLI);
+  // add a hidden input so it can get name prop and be submittable
+  let hiddenInput = document.createElement('input');
+  hiddenInput.type = "hidden";
+  hiddenInput.name = "word";
+  hiddenInput.value = word.replaceAll(' ', '');// cleans spaces btween words
+  form.appendChild(hiddenInput);
 }
 
 function createBoard(){
