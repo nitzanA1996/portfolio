@@ -5,7 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Word Hunt</title>
   <link rel="stylesheet" href="style.css">
-  <script src="script.js" defer></script>
+  <script type="module" src="script.js" defer></script>
+  <script type="module" src="gamePlay.js" defer></script>
 </head>
 <body>
   <header class="title">
@@ -26,15 +27,16 @@
         <fieldset class="words-picking">
           <header>
             <h3>Hidden words</h3>
-            <h4>choose your own words or generate random ones</h4>
+            <h4 class="semi-titel">choose your own words or generate random ones</h4>
+            <span id="warning_Select_size" class="warning_Select_size">*Select a board size before proceeding.</span>
           </header>
           <div class="create-words">
             <div class="choose-word">
               <input type="text" id="user-word" name="user-word">
-              <button type="button" id="add-word">add word</button>
+              <button type="button" id="add-word" disabled>add word</button>
             </div> <br>
             <label for="Random-word">add a random name of flower</label>
-            <button id="Random-word">press</button>
+            <button type="button" id="Random-word" disabled>press</button>
           </div>
 
           <footer>

@@ -2,7 +2,14 @@
 const gameBoard = document.querySelector(".game-board"); 
 const form = document.querySelector("form");
 const list = document.querySelector(".words-list");
+
 const gameDialog = document.getElementById("game-dialog");
+const rowsInput = document.getElementById('rows');
+const colsInput = document.getElementById('columns');
+const selcectSizeWarning = document.getElementById('warning_Select_size');
+
+let placeWords = [];
+
 const alphabet = [
   "A","B","C","D","E","F","G",
   "H","I","J","K","L","M",
@@ -100,6 +107,9 @@ form.addEventListener("submit", function(event){
   createBoard();
 });
 
+// checks that the filed was filled
+rowsInput.addEventListener('input', checkSizeToEnable);
+colsInput.addEventListener('input', checkSizeToEnable);
 /* functions */
 
 // adds new words in the list
@@ -150,6 +160,7 @@ function createBoard(){
   for(let i = 0; i < totalCell; i++) {
     const cell = document.createElement("div");
     cell.classList.add('cell');
+    cell.dataset.id = i;
     gameBoard.appendChild(cell);
 
     const cube = {
@@ -255,7 +266,10 @@ function fitWords(listOfwords){
       console.log(randCube, direct.name);
       
       succeeded = isFit(word, gameMap[randCube], direct);
-      if(succeeded) printWord(word, gameMap[randCube], direct);
+      if(succeeded) {
+        printWord(word, gameMap[randCube], direct)
+        placeWords.push(word);
+      };
       iterateConter++
     }
   }
@@ -282,3 +296,20 @@ function printWord(word, cube, direct){
     }
   }
 }
+
+function checkSizeToEnable(){
+  const r = parseInt(rowsInput.value);
+  const c = parseInt(colsInput.value);
+
+  if (r >= 2 && c >= 2) {
+    addWordBtn.disabled = false;
+    randomBtn.disabled = false;
+    selcectSizeWarning.style.display = "none"
+  } else {
+    addWordBtn.disabled = true;
+    randomBtn.disabled = true;
+    selcectSizeWarning.style.display = "block"    
+  }  
+}
+
+export { gameMap, rows, columns, placeWords };
