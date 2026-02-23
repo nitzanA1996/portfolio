@@ -7,6 +7,7 @@ const gameDialog = document.getElementById("game-dialog");
 const rowsInput = document.getElementById('rows');
 const colsInput = document.getElementById('columns');
 const selcectSizeWarning = document.getElementById('warning_Select_size');
+const gameWordsList = document.getElementById('game-words-list');
 
 let placeWords = [];
 
@@ -242,6 +243,7 @@ function fitWords(listOfwords){
   const sortedByLen = listOfwords.sort((a, b) => a.length - b.length);
   const notIncluded = [];
   
+  gameWordsList.innerHTML = "";
   while(sortedByLen.length > 0){
     let iterateConter = 0;
     let succeeded = false;
@@ -273,6 +275,12 @@ function fitWords(listOfwords){
       iterateConter++
     }
   }
+  placeWords.forEach(word => {
+    const newLI = document.createElement('li');
+    newLI.classList.add('word-in-list');
+    newLI.innerText = word;
+    gameWordsList.appendChild(newLI);
+  });
 }
 
 function printWord(word, cube, direct){

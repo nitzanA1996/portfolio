@@ -1,11 +1,18 @@
 import{gameMap, rows, columns, placeWords} from './script.js';
 
+
 const gameBoard = document.querySelector(".game-board");
+const victoryDialog = document.getElementById("victory-dialog");
+const playAgainBtn = document.getElementById("play-again-btn");
 
 let wordLeft = placeWords;
 let wordBeginnig;
 
 let isEnd = false;
+
+playAgainBtn.addEventListener("click", () => {
+  window.location.reload(); 
+});
 
 gameBoard.addEventListener("click", function(event){
   if(event.target.classList.contains("cell")){
@@ -24,6 +31,7 @@ gameBoard.addEventListener("click", function(event){
 });
 
 function checkWord(wordBeginnig, wordEnd){
+  console.log(placeWords);
   let currentCubeIndex = wordBeginnig.id;
   let cubeIndexes = [currentCubeIndex];
   let stepInDirection;
@@ -56,7 +64,7 @@ function checkWord(wordBeginnig, wordEnd){
   
   if(successful){
     cubeIndexes.forEach(index => {
-      gameMap[index].element.classList.add("found");
+    gameMap[index].element.classList.add("found");
     })
     eraseFromList(word, wordReverse)
   }else{
@@ -65,14 +73,18 @@ function checkWord(wordBeginnig, wordEnd){
   }
 }
 
-function eraseFromList(word){
-  wordLeft = placeWords.filter(w => w != word || w != wordReverse);
-  console.log(word);
-  console.log(wordLeft);
-  if(wordLeft = []) wining();
+function eraseFromList(word, wordReverse){
+  wordLeft = wordLeft.filter(w => w != word && w != wordReverse);
+  const wordLI = document.querySelectorAll('.word-in-list');
+  const wordLIArray = Array.from(wordLI);
+  const listItem = wordLIArray.find(w => w.innerText === word || w.innerText === wordReverse);
+  console.log(listItem);
+  
+  listItem.classList.add('found-word');
+  if(wordLeft.length === 0) showVictory();
 }
 
-function wining(){
+function showVictory(){
   console.log('win!');
-  
+  victoryDialog.showModal();
 }

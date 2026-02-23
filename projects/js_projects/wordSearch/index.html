@@ -50,7 +50,22 @@
     </section>
 
     <dialog class="board-section" id="game-dialog">
-      <div class="game-board"></div>
+      <div class="game-container">
+        <aside class="game-sidebar">
+          <h3>Words to find:</h3>
+          <ul id="game-words-list"></ul>
+        </aside>
+
+        <div class="game-board"></div>
+      </div>
+    </dialog>
+    
+    <dialog id="victory-dialog">
+      <div class="victory-content">
+        <h2>🎉 congrats! 🎉</h2>
+        <p>you found all expressions!</p>
+        <button id="play-again-btn">play Agin</button>
+      </div>
     </dialog>
   </main>
 </body>
