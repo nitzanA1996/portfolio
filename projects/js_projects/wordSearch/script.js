@@ -6,10 +6,74 @@ const list = document.querySelector(".words-list");
 const gameDialog = document.getElementById("game-dialog");
 const rowsInput = document.getElementById('rows');
 const colsInput = document.getElementById('columns');
-const selcectSizeWarning = document.getElementById('warning_Select_size');
 const gameWordsList = document.getElementById('game-words-list');
 
+const selcectSizeWarning = document.getElementById('warning_Select_size');
+const errorMessageWord = document.querySelector('.error-unvalid-word');
+
+let currentLang = "en";
 let placeWords = [];
+const randHebFlowers= [
+"כלנית", "רקפת", "איריס", "נרקיס", "חרצית", 
+"סביון", "צבעוני", "ורד", "יסמין", "חמניה", 
+"לוטם", "נורית", "פרג", "חצב", "סתוונית", 
+"כרכום", "מרגנית", "עירית", "דם המכבים", "תורמוס", 
+"גרניום", "פטוניה", "בוגנוויליה", "היביסקוס", "הרדוף", 
+"ציפורן", "ליליה", "שושן צחור", "סיגלית", "אמנון ותמר"
+];
+const LANG_CONFIG = {
+  en: {
+    dir: "ltr",
+    alphabet: "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split(""),
+    validRegex: /^[a-zA-Z ]+$/,
+    randomWords: ["ROSE", "LILY", "TULIP", "DAISY", "ORCHID"],
+    ui: {
+      title: "Word Hunt generator",
+      subtitle: "generate your own Word Hunt game",
+      tableSize: "table size",
+      rowsPlaceholder: "number of rows",
+      colsPlaceholder: "number of columns",
+      hiddenWordsTitle: "hidden words",
+      hiddenWordsSemiTitle: "choose your own words or generate random ones",
+      addWordBtn: "add word",
+      randomLabel: "add a random flower name",
+      randomBtn: "press",
+      createTableBtn: "create table",
+      warningSize: "*Select a board size before proceeding.",
+      wordsTitle: "Words to find:",
+      invalidWord: "*invalid input: use English letters only",
+      victoryTitle: "🎉 congrats! 🎉",
+      victoryText: "you found all expressions!",
+      playAgain: "play again",
+      toggleBtn: "עברית / Hebrew"
+    }
+  },
+  he: {
+    dir: "rtl",
+    alphabet: ["א","ב","ג","ד","ה","ו","ז","ח","ט","י","כ","ל","מ","נ","ס","ע","פ","צ","ק","ר","ש","ת"],
+    validRegex: /^[א-ת ךםןףץ'-]+$/,
+    ui: {
+      title: "מחולל התפזורות",
+      subtitle: "צרי תפזורת משלך",
+      tableSize: "גודל הלוח",
+      rowsPlaceholder: "מספר שורות",
+      colsPlaceholder: "מספר עמודות",
+      hiddenWordsTitle: "מילים נסתרות",
+      hiddenWordsSemiTitle: "בחרי מילים משלך או מילים אקראיות",
+      addWordBtn: "הוספי מילה",
+      randomLabel: "הוספי שם פרח או צמח אקראי",
+      randomBtn: "לחצי כאן",
+      createTableBtn: "צרי לוח",
+      warningSize: "*אנא בחרי גודל לוח לפני ההמשך.",
+      wordsTitle: "מילים לחיפוש:",
+      invalidWord: "*קלט לא תקין: השתמשי באותיות עבריות בלבד",
+      victoryTitle: "🎉 כל הכבוד! 🎉",
+      victoryText: "מצאת את כל המילים!",
+      playAgain: "שחקי שוב",
+      toggleBtn: "English / אנגלית"
+    }
+  }
+};
 
 const alphabet = [
   "A","B","C","D","E","F","G",
@@ -18,8 +82,10 @@ const alphabet = [
   "T","U","V","W","X","Y","Z"
 ];
 
+const langToggleBtn = document.getElementById("lang-toggle");
 const addWordBtn = document.querySelector('#add-word');
 const inputWord = document.querySelector('#user-word');
+const wordError = document.getElementById('word-error');
 const randomBtn = document.getElementById("Random-word");
 
 let gameMap = [];
@@ -27,6 +93,11 @@ let rows = 0;
 let columns = 0;
 
 /* events */
+// toggle language
+langToggleBtn.addEventListener("click", () => {
+  const nextLang = currentLang === "en" ? "he" : "en";
+  applyLanguage(nextLang);
+});
 // send word with btn
 addWordBtn.addEventListener("click", appendWordList);
 // send word with Enter
@@ -36,7 +107,22 @@ inputWord.addEventListener("keydown", function(ev){
     appendWordList()
   }
 })
-
+// checkes if valid
+inputWord.addEventListener('input', function() {
+  const text = inputWord.value;
+  const isValid = getCurrentRegex().test(text)
+  if(text ===""){
+    wordError.style.display = "none";
+    addWordBtn.disabled = true;
+    return;
+  }else if(isValid){
+    wordError.style.display = "none";
+    addWordBtn.disabled = false;
+  }else {
+    wordError.style.display = "block";
+    addWordBtn.disabled = true;
+  }
+})
 // add random words
 randomBtn.addEventListener("click", async function() {
   const originalText = randomBtn.innerText;
@@ -115,7 +201,6 @@ colsInput.addEventListener('input', checkSizeToEnable);
 
 // adds new words in the list
 function appendWordList(){
-
   const newWord = inputWord.value;
   if(newWord){
     addWordToGame(newWord);
@@ -125,6 +210,8 @@ function appendWordList(){
 }
 function addWordToGame(word){
   if (!word) return;
+  
+  const normalizedWord = normalizeWord(word);
   /* --! checkes if the words entered isnt to long for the board !-- */  
   // checkes the sizes directlety from the form fields
   const inputRows = document.getElementById('rows').value;
@@ -132,20 +219,20 @@ function addWordToGame(word){
   // only if fileds sizes where entered
   if (inputRows && inputCols){
     const maxSize = Math.max(inputCols, inputRows);
-    if(word.length > maxSize) {
-      alert(`"${word}" is too long for board size`)
+    if(normalizedWord.replaceAll(" ", "").length > maxSize) {
+      alert(`"${normalizedWord}" is too long for board size`)
       return;
     }
   }
 
   let newLI =  document.createElement("li");
-  newLI.innerText = word.trim();
+  newLI.innerText = normalizedWord;
   list.appendChild(newLI);
   // add a hidden input so it can get name prop and be submittable
   let hiddenInput = document.createElement('input');
   hiddenInput.type = "hidden";
   hiddenInput.name = "word";
-  hiddenInput.value = word.replaceAll(' ', '');// cleans spaces btween words
+  hiddenInput.value = normalizedWord.replaceAll(' ', '');// cleans spaces btween words
   form.appendChild(hiddenInput);
 }
 
@@ -182,6 +269,7 @@ function createBoard(){
 }
 
 function fillRandLetter(){
+  const alphabet = getCurrentAlphabet();
   gameMap.forEach(cube => {
     if(!cube.taken){
       const rand = Math.floor(Math.random() * alphabet.length);
@@ -318,6 +406,45 @@ function checkSizeToEnable(){
     randomBtn.disabled = true;
     selcectSizeWarning.style.display = "block"    
   }  
+}
+
+function applyLanguage(lang) {
+  currentLang = lang;
+  const config = LANG_CONFIG[lang];
+
+  document.documentElement.lang = lang;
+  document.documentElement.dir = config.dir;
+
+  document.querySelector('[data-i18n="title"]').textContent = config.ui.title;
+  document.querySelector('[data-i18n="semi-title"]').textContent = config.ui.subtitle;
+  document.querySelector('[data-i18n="hidden-words-title"]').textContent = config.ui.hiddenWordsTitle;
+  document.querySelector('[data-i18n="hidden-words-semititle"]').textContent = config.ui.hiddenWordsSemiTitle;
+  document.querySelector('[data-i18n="table-size"]').textContent = config.ui.tableSize;
+
+
+  rowsInput.placeholder = config.ui.rowsPlaceholder;
+  colsInput.placeholder = config.ui.colsPlaceholder;
+
+  addWordBtn.textContent = config.ui.addWordBtn;
+  randomBtn.textContent = config.ui.randomBtn;
+  wordError.textContent = config.ui.invalidWord;
+  selcectSizeWarning.textContent = config.ui.warningSize;
+  langToggleBtn.textContent = config.ui.toggleBtn;
+
+  document.querySelector('label[for="Random-word"]').textContent = config.ui.randomLabel;
+  document.querySelector('button[type="submit"]').textContent = config.ui.createTableBtn;
+  document.querySelector('.game-sidebar h3').textContent = config.ui.wordsTitle;
+  document.querySelector('#victory-dialog h2').textContent = config.ui.victoryTitle;
+  document.querySelector('#victory-dialog p').textContent = config.ui.victoryText;
+  document.getElementById('play-again-btn').textContent = config.ui.playAgain;
+}
+
+function getCurrentAlphabet() {
+  return LANG_CONFIG[currentLang].alphabet;
+}
+
+function getCurrentRegex() {
+  return LANG_CONFIG[currentLang].validRegex;
 }
 
 export { gameMap, rows, columns, placeWords };

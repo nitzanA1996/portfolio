@@ -9,31 +9,33 @@
   <script type="module" src="gamePlay.js" defer></script>
 </head>
 <body>
+  <button type="button" id="lang-toggle" class="lang-btn">עברית / Hebrew</button>
   <header class="title">
-    <h1>Word Hunt generator</h1>
+    <h1 data-i18n="title">Word Hunt generator</h1>
   </header>
   <main>
     <section class="form-section">
       <form id='table-setting'>
-        <h2>generate your own Word Hunt game</h2>
+        <h2 data-i18n="semi-title">generate your own Word Hunt game</h2>
         <fieldset>
-          <legend>Table size</legend>
+          <legend data-i18n="table-size">Table size</legend>
           <br>
-          <input type="number" id="rows" name="rows" placeholder="number of rows">
+          <input type="number" id="rows" name="rows" data-i18n-placeholder="rowsPlaceholder" placeholder="number of rows">
           <span>/</span>
           <input type="number" id="columns" name="columns"placeholder="columns of table">
         </fieldset>
 
         <fieldset class="words-picking">
           <header>
-            <h3>Hidden words</h3>
-            <h4 class="semi-titel">choose your own words or generate random ones</h4>
+            <h3 data-i18n="hidden-words-title">Hidden words</h3>
+            <h4  data-i18n="hidden-words-semititle"class="semi-titel">choose your own words or generate random ones</h4>
             <span id="warning_Select_size" class="warning_Select_size">*Select a board size before proceeding.</span>
           </header>
           <div class="create-words">
             <div class="choose-word">
               <input type="text" id="user-word" name="user-word">
               <button type="button" id="add-word" disabled>add word</button>
+              <span id="word-error" aria-live=polite>*unvalid input: plaese use English letters only</span>
             </div> <br>
             <label for="Random-word">add a random name of flower</label>
             <button type="button" id="Random-word" disabled>press</button>
