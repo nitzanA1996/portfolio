@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Manager</title> <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet"> <link rel="stylesheet" href="style.css"> </head>
+<body>
+
+    <header> <h1>Task Manager</h1> </header>
+
+    <main class="app-card"> <div class="input-section"> <input type="text" id="taskInput" placeholder="What needs to be done?"> <input type="date" id="taskDate"> <select id="taskPriority" class="priority-select">
+                <option value="low">Low Priority</option>
+                <option value="medium">Medium Priority</option>
+                <option value="high">High Priority</option>
+            </select>
+
+            <button id="addTaskBtn">Add Task</button> </div>
+
+        <div class="controls-section">
+            <div class="filters-section"> <button data-filter="all" class="active">All</button> <button data-filter="active">Active</button> <button data-filter="completed">Completed</button> </div>
+
+            <div class="sort-section"> <button id="sortDateBtn">Sort by Due Date</button> </div>
+        </div>
+
+        <ul id="taskList">
+          
+        </ul>
+
+    </main>
+
+    <footer> <p>Built by Nitzan Aloni</p>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>

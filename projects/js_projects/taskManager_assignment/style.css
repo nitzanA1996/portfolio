@@ -1,0 +1,178 @@
+/* הגדרת משתני צבעים ל-Dark Mode מודרני */
+:root {
+    --bg-dark: #121212;
+    --card-bg: #1e1e1e;
+    --text-main: #e4e4e7;
+    --text-muted: #a1a1aa;
+    --primary-accent: #6366f1; /* סגול-כחול מודרני */
+    --primary-hover: #4f46e5;
+    --border-color: #333333;
+    
+    /* צבעים לעדיפויות (Priority) */
+    --priority-high: #ef4444;
+    --priority-medium: #f59e0b;
+    --priority-low: #10b981;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Inter', Arial, sans-serif; /* [cite: 42] */
+    background-color: var(--bg-dark); /* [cite: 43] */
+    color: var(--text-main); /* [cite: 43] */
+    display: flex; /*  */
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px; /* [cite: 45] */
+}
+
+header {
+    margin-bottom: 30px; /* [cite: 45] */
+    text-align: center;
+}
+
+h1 {
+    font-size: 2.5rem;
+    font-weight: 600;
+    letter-spacing: -0.5px;
+}
+
+/* עיצוב הכרטיסייה המרכזית */
+.app-card {
+    background-color: var(--card-bg);
+    width: 100%;
+    max-width: 800px;
+    border-radius: 16px;
+    padding: 30px; /* [cite: 45] */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    border: 1px solid var(--border-color); /* [cite: 43] */
+    display: flex; /*  */
+    flex-direction: column;
+    gap: 25px; /* [cite: 45] */
+}
+
+/* אזור הקלט */
+.input-section {
+    display: flex; /*  */
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+input, select, button {
+    padding: 12px 16px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    font-family: inherit;
+    font-size: 0.95rem;
+    transition: all 0.2s ease; /*  */
+}
+
+input:focus, select:focus {
+    outline: none;
+    border-color: var(--primary-accent);
+}
+
+#taskInput {
+    flex: 1; /* לוקח את רוב המקום */
+    min-width: 200px;
+}
+
+button {
+    cursor: pointer;
+    font-weight: 500;
+}
+
+/* כפתור הוספה */
+#addTaskBtn {
+    background-color: var(--primary-accent);
+    color: white;
+    border: none;
+}
+
+#addTaskBtn:hover {
+    background-color: var(--primary-hover); /*  */
+    transform: translateY(-2px);
+}
+
+#addTaskBtn:active {
+    transform: translateY(0); /*  */
+}
+
+/* אזור הסינון והמיון */
+.controls-section {
+    display: flex; /*  */
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 15px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.filters-section button, .sort-section button {
+    background: transparent;
+    border: 1px solid var(--border-color);
+}
+
+.filters-section button:hover, .sort-section button:hover {
+    border-color: var(--text-muted); /*  */
+}
+
+.filters-section button.active {
+    background-color: var(--border-color);
+    color: white;
+}
+
+/* רשימת המשימות */
+ul {
+    list-style-type: none;
+    display: flex; /*  */
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* עיצוב לפריט משימה (יווצר ב-JS) */
+li {
+    background-color: var(--bg-dark);
+    padding: 15px 20px;
+    border-radius: 10px;
+    display: flex; /*  */
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid var(--border-color); /* [cite: 43] */
+    transition: all 0.3s ease; /*  */
+}
+
+/* מצב משימה שהושלמה */
+li.completed { /* [cite: 95, 96] */
+    opacity: 0.5;
+}
+
+li.completed .task-text {
+    text-decoration: line-through; /* [cite: 96] */
+    color: var(--text-muted);
+}
+
+footer {
+    margin-top: auto;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+}
+
+/* עיצוב רספונסיבי למסכים קטנים */
+@media (max-width: 600px) { /* [cite: 50, 51] */
+    .input-section {
+        flex-direction: column;
+    }
+    .controls-section {
+        flex-direction: column;
+        align-items: stretch;
+    }
+}
