@@ -71,6 +71,7 @@ function createBoard() {
         const cell = document.createElement("div");
         cell.classList.add("cell");
         cell.id = i;
+        cell.dataset.test = `cell ${i}`;
         gameBoard.appendChild(cell);
 
 
