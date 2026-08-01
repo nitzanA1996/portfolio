@@ -11,13 +11,15 @@ const apiClient = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
-  timeout: 5000, // Set a timeout of 5 seconds for requests 
+  timeout: 5000,
 });
 
 const BOOKS_ENDPOINT = '/myBooks';
 
-export const getBooks = async (): Promise<Book[]> => {
-  const response = await apiClient.get<Book[]>(BOOKS_ENDPOINT);
+export const getBooks = async (signal?: AbortSignal): Promise<Book[]> => {
+  const response = await apiClient.get<Book[]>(BOOKS_ENDPOINT, {
+    signal,
+  });
 
   return response.data;
 };
@@ -30,7 +32,10 @@ export const createBook = async (
   return response.data;
 };
 
-export const editBook = async (id: string, {...updates}: EditBookRequest): Promise<Book> => {
+export const editBook = async (
+  id: Book['id'],
+  updates: EditBookRequest,
+): Promise<Book> => {
   const response = await apiClient.patch<Book>(
     `${BOOKS_ENDPOINT}/${id}`,
     updates,
@@ -39,8 +44,8 @@ export const editBook = async (id: string, {...updates}: EditBookRequest): Promi
   return response.data;
 };
 
-export const deleteBook = async ( id: string): Promise<void> => {
-  await apiClient.delete(`${BOOKS_ENDPOINT}/${id}`);
+export const deleteBook = async (id: Book['id']): Promise<void> => {
+  await apiClient.delete<void>(`${BOOKS_ENDPOINT}/${id}`);
 };
 
 export { apiClient };

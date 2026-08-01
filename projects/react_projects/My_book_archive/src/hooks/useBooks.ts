@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { useCallback, useEffect, useState } from 'react';
 
 import type {
@@ -13,6 +14,18 @@ import {
 } from '../services/api-services';
 
 const getErrorMessage = (error: unknown): string => {
+  if (axios.isAxiosError(error)) {
+    if (error.code === 'ECONNABORTED') {
+      return 'The request took too long. Please try again.';
+    }
+
+    if (!error.response) {
+      return 'Unable to connect to the server. Check your connection.';
+    }
+
+    return `The request failed with status ${error.response.status}.`;
+  }
+
   if (error instanceof Error) {
     return error.message;
   }
@@ -23,31 +36,42 @@ const getErrorMessage = (error: unknown): string => {
 export const useBooks = () => {
   const [books, setBooks] = useState<Book[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isMutating, setIsMutating] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchBooks = useCallback(async (): Promise<void> => {
+  const fetchBooks = useCallback(async (signal?: AbortSignal): Promise<void> => {
     setIsLoading(true);
     setError(null);
 
     try {
-      const data: Book[] = await getBooks();
+      const data = await getBooks(signal);
       setBooks(data);
     } catch (error: unknown) {
-      setError(getErrorMessage(error));
+      if (!axios.isCancel(error)) {
+        setError(getErrorMessage(error));
+      }
     } finally {
-      setIsLoading(false);
+      if (!signal?.aborted) {
+        setIsLoading(false);
+      }
     }
   }, []);
 
   useEffect(() => {
+    const controller = new AbortController();
+
     // The effect intentionally synchronizes the hook with the remote API.
     // eslint-disable-next-line react-hooks/set-state-in-effect
-    void fetchBooks();
+    void fetchBooks(controller.signal);
+
+    return () => {
+      controller.abort();
+    };
   }, [fetchBooks]);
 
   const createBook = useCallback(
     async (book: CreateBookRequest): Promise<Book | null> => {
-      setIsLoading(true);
+      setIsMutating(true);
       setError(null);
 
       try {
@@ -60,7 +84,7 @@ export const useBooks = () => {
 
         return null;
       } finally {
-        setIsLoading(false);
+        setIsMutating(false);
       }
     },
     [],
@@ -71,7 +95,7 @@ export const useBooks = () => {
       id: Book['id'],
       updates: EditBookRequest,
     ): Promise<Book | null> => {
-      setIsLoading(true);
+      setIsMutating(true);
       setError(null);
 
       try {
@@ -88,7 +112,7 @@ export const useBooks = () => {
 
         return null;
       } finally {
-        setIsLoading(false);
+        setIsMutating(false);
       }
     },
     [],
@@ -96,7 +120,7 @@ export const useBooks = () => {
 
   const deleteBook = useCallback(
     async (id: Book['id']): Promise<boolean> => {
-      setIsLoading(true);
+      setIsMutating(true);
       setError(null);
 
       try {
@@ -111,10 +135,16 @@ export const useBooks = () => {
 
         return false;
       } finally {
-        setIsLoading(false);
+        setIsMutating(false);
       }
     },
     [],
+  );
+
+  const toggleFavorite = useCallback(
+    async (book: Book): Promise<Book | null> =>
+      editBook(book.id, { isFavorite: !book.isFavorite }),
+    [editBook],
   );
 
   const clearError = useCallback(() => {
@@ -124,11 +154,13 @@ export const useBooks = () => {
   return {
     books,
     isLoading,
+    isMutating,
     error,
     fetchBooks,
     createBook,
     editBook,
     deleteBook,
+    toggleFavorite,
     clearError,
   };
 };
