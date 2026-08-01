@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from 'react';
 import type {
   Book,
   CreateBookRequest,
+  EditBookChanges,
   EditBookRequest,
 } from '../models/books';
 import {
@@ -93,13 +94,28 @@ export const useBooks = () => {
   const editBook = useCallback(
     async (
       id: Book['id'],
-      updates: EditBookRequest,
+      updates: EditBookChanges,
     ): Promise<Book | null> => {
       setIsMutating(true);
       setError(null);
 
       try {
-        const editedBook = await editBookRequest(id, updates);
+        const currentBook = books.find((book) => book.id === id);
+
+        if (!currentBook) {
+          throw new Error('The book could not be found in the archive.');
+        }
+
+        const request: EditBookRequest = {
+          title: updates.title ?? currentBook.title,
+          author: updates.author ?? currentBook.author,
+          description: updates.description ?? currentBook.description,
+          coverImage: updates.coverImage ?? currentBook.coverImage,
+          isFavorite: updates.isFavorite ?? currentBook.isFavorite,
+          genre: updates.genre ?? currentBook.genre,
+        };
+
+        const editedBook = await editBookRequest(id, request);
         setBooks((currentBooks) =>
           currentBooks.map((book) =>
             book.id === id ? editedBook : book,
@@ -115,7 +131,7 @@ export const useBooks = () => {
         setIsMutating(false);
       }
     },
-    [],
+    [books],
   );
 
   const deleteBook = useCallback(

@@ -34,11 +34,11 @@ export const createBook = async (
 
 export const editBook = async (
   id: Book['id'],
-  updates: EditBookRequest,
+  book: EditBookRequest,
 ): Promise<Book> => {
-  const response = await apiClient.patch<Book>(
+  const response = await apiClient.put<Book>(
     `${BOOKS_ENDPOINT}/${id}`,
-    updates,
+    book,
   );
 
   return response.data;

@@ -1,10 +1,11 @@
-import { LuHeart, LuSearch, LuX } from 'react-icons/lu';
+import { LuHeart, LuPlus, LuSearch, LuX } from 'react-icons/lu';
 
 interface BookControlsProps {
   searchTerm: string;
   showFavoritesOnly: boolean;
   onSearchChange: (value: string) => void;
   onToggleFavorites: () => void;
+  onAddBook: () => void;
 }
 
 export default function BookControls({
@@ -12,6 +13,7 @@ export default function BookControls({
   showFavoritesOnly,
   onSearchChange,
   onToggleFavorites,
+  onAddBook,
 }: BookControlsProps) {
   return (
     <div className="mt-7 flex flex-col gap-3 sm:mt-8 sm:flex-row sm:items-center sm:justify-between">
@@ -43,21 +45,41 @@ export default function BookControls({
         )}
       </div>
 
+      <div className="flex shrink-0 gap-3">
+        <button
+          type="button"
+          aria-pressed={showFavoritesOnly}
+          onClick={onToggleFavorites}
+          className={`inline-flex h-11 flex-1 items-center justify-center gap-2 rounded-full border px-5 text-sm font-semibold transition focus:outline-none focus:ring-4 focus:ring-archive-100 sm:flex-none sm:text-base ${
+            showFavoritesOnly
+              ? 'border-archive-800 bg-archive-800 text-white shadow-md shadow-archive-800/20'
+              : 'border-archive-200 bg-white text-archive-800 shadow-sm hover:border-archive-300 hover:bg-archive-50'
+          }`}
+        >
+          <LuHeart
+            aria-hidden="true"
+            className={`size-5 ${showFavoritesOnly ? 'fill-current' : ''}`}
+          />
+          Favorites only
+        </button>
+
+        <button
+          type="button"
+          onClick={onAddBook}
+          className="hidden h-11 items-center justify-center gap-2 rounded-full bg-archive-800 px-6 text-sm font-semibold text-white shadow-md shadow-archive-800/20 transition hover:bg-archive-700 focus:outline-none focus:ring-4 focus:ring-archive-200 sm:inline-flex sm:text-base"
+        >
+          <LuPlus aria-hidden="true" className="size-5" />
+          Add New Book
+        </button>
+      </div>
+
       <button
         type="button"
-        aria-pressed={showFavoritesOnly}
-        onClick={onToggleFavorites}
-        className={`inline-flex h-11 shrink-0 items-center justify-center gap-2 rounded-full border px-5 text-sm font-semibold transition focus:outline-none focus:ring-4 focus:ring-archive-100 sm:text-base ${
-          showFavoritesOnly
-            ? 'border-archive-800 bg-archive-800 text-white shadow-md shadow-archive-800/20'
-            : 'border-archive-200 bg-white text-archive-800 shadow-sm hover:border-archive-300 hover:bg-archive-50'
-        }`}
+        onClick={onAddBook}
+        aria-label="Add new book"
+        className="fixed right-5 bottom-5 z-40 grid size-14 place-items-center rounded-full bg-archive-800 text-white shadow-xl shadow-archive-800/30 transition hover:bg-archive-700 focus:outline-none focus:ring-4 focus:ring-archive-200 sm:hidden"
       >
-        <LuHeart
-          aria-hidden="true"
-          className={`size-5 ${showFavoritesOnly ? 'fill-current' : ''}`}
-        />
-        Favorites only
+        <LuPlus aria-hidden="true" className="size-7" />
       </button>
     </div>
   );
