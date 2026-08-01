@@ -1,75 +1,32 @@
-# React + TypeScript + Vite
+# 📖 My Book Archive
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, responsive Single Page Application (SPA) built with React and TypeScript. This application serves as a personal book catalog, allowing users to efficiently manage their reading collection with full CRUD (Create, Read, Update, Delete) functionality.
 
-Currently, two official plugins are available:
+🚀 **[View Live Demo Here](https://nitzana1996.github.io/portfolio/projects/react_projects/My_book_archive/dist/)**
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## ✨ Features
 
-## React Compiler
+*   **View Collection:** Displays a responsive grid of book cards, each showing the book's cover, title, author, and description.
+*   **Add New Books:** Users can add new entries to their catalog via a clean, intuitive modal form.
+*   **Edit & Update:** Easily modify existing book details.
+*   **Delete Books:** Remove books from the collection with a single click.
+*   **Favorites:** Toggle a "like" status (heart icon) to mark books as favorites.
+*   **Search & Filter:** 
+    *   Real-time search bar to find specific books.
+    *   Custom category filters to sort books by genre (Mystery, Fantasy, Sci-Fi, etc.).
+*   **Responsive Design:** Fully optimized for both desktop and mobile viewing experiences.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🛠️ Tech Stack
 
-## Expanding the ESLint configuration
+*   **Frontend Framework:** React (with Functional Components and Hooks)
+*   **Language:** TypeScript for type safety and better developer experience
+*   **Build Tool:** Vite (for fast, modern development and bundling)
+*   **Styling:** Tailwind CSS v4 & Flowbite React (for modular, utility-first UI components)
+*   **HTTP Client:** Axios (for seamless API communication)
+*   **Backend / Database:** MockAPI (Handling RESTful API requests)
+*   **Icons:** React Icons
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 👨‍💻 Author
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
-```
+**Nitzan Aloni**
+Full-Stack Web Development Student
